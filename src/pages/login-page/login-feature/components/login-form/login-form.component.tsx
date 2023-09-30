@@ -2,7 +2,7 @@ import {TextField, Button} from '@mui/material';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 
-import {loginAction, registerAction} from '../../../../../slices';
+import {loginAction} from '../../../../../slices';
 import {useAppDispatch} from '../../../../../store/store';
 import {useNavigate} from 'react-router';
 
@@ -11,14 +11,14 @@ export const LoginForm = () => {
   const navigate = useNavigate();
 
   const formik = useFormik({
-    initialValues: {name: '', email: '', password: '', confirmPassword: ''},
+    initialValues: {email: '', password: ''},
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const {email, name, password} = values;
+      const {email, password} = values;
       const actionResult = await dispatch(loginAction({email, password}));
 
-      if (registerAction.fulfilled.match(actionResult)) {
-        // navigate('/home');
+      if (loginAction.fulfilled.match(actionResult)) {
+        navigate('/dashboard');
       }
     },
   });

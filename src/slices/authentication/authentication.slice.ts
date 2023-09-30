@@ -10,7 +10,7 @@ export interface AuthenticationState {
 }
 
 const initialState: AuthenticationState = {
-  token: undefined,
+  token: localStorage.getItem('jwt') ?? undefined,
   email: '',
   loading: false,
 };
@@ -32,7 +32,12 @@ export const loginAction = createAsyncThunk(
 export const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
-  reducers: {},
+  reducers: {
+    clearAuthenticationStateAction: () => {
+      localStorage.clear();
+      return initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder
       /** Pending */
@@ -67,6 +72,6 @@ export const authenticationSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {} = authenticationSlice.actions;
+export const {clearAuthenticationStateAction} = authenticationSlice.actions;
 
 export const authenticationReducer = authenticationSlice.reducer;
