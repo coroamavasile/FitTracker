@@ -9,19 +9,41 @@ const fitTrackerApi = axios.create({
   },
 });
 
-// Add an interceptor to handle authentication tokens if needed
 fitTrackerApi.interceptors.request.use(
   (config) => {
-    // You can modify the request headers here, e.g., add an authentication token
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers['Authorization'] = `Bearer ${token}`;
-    // }
+    const jwt = localStorage.getItem('jwt');
+
+    if (jwt) {
+      config.headers.Authorization = `Bearer ${jwt}`;
+    }
+
     return config;
   },
   (error) => {
     return Promise.reject(error);
   }
 );
+
+// fitTrackerApi.interceptors.response.use(
+//   (response) => {
+//     if (!response) {
+//       return Promise.reject('Response canceled!');
+//     }
+//     return response;
+//   },
+//   (error) => {
+//     const responseData = error.response?.data;
+
+//     if (responseData && responseData.errorCode === ErrorCode.INVALID_TOKEN) {
+//       localStorage.clear();
+//       window.location.href = '/login';
+//     }
+
+//     return Promise.reject({
+//       code: responseData?.errorCode?.toString() || 'Unknown',
+//       message: responseData?.message || 'An error occurred',
+//     });
+//   },
+// );
 
 export {fitTrackerApi};

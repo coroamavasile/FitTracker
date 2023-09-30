@@ -1,5 +1,7 @@
+import {LoginFeature} from './login-feature/login-feature';
+
 const LoginPage = () => {
-  return <div>Login Page</div>;
+  return <LoginFeature />;
 };
 
 export default LoginPage;
