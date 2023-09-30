@@ -4,16 +4,24 @@ import * as yup from 'yup';
 
 import {registerAction} from '../../../../../slices';
 import {useAppDispatch} from '../../../../../store/store';
+import {useNavigate} from 'react-router';
 
 export const RegisterForm = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {name: '', email: '', password: '', confirmPassword: ''},
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const {email, name, password} = values;
-      dispatch(registerAction({email, name, password}));
+      const actionResult = await dispatch(
+        registerAction({email, name, password})
+      );
+
+      if (registerAction.fulfilled.match(actionResult)) {
+        navigate('/login');
+      }
     },
   });
 
@@ -75,7 +83,7 @@ export const RegisterForm = () => {
           }
         />
         <Button color="primary" variant="contained" fullWidth type="submit">
-          Submit
+          Register
         </Button>
       </form>
     </div>

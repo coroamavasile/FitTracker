@@ -1,7 +1,8 @@
-import styles from './navbar.module.scss';
 import {useNavigate} from 'react-router';
 
-export const Navbar = () => {
+import styles from './app-navbar.module.scss';
+
+export const AppNavbar = () => {
   const navigate = useNavigate();
 
   const renderNavbarElement = (name: string, path: string) => {

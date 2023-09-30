@@ -1,12 +1,13 @@
 .navbar {
   display: flex;
   background: purple;
-  height: 20px;
+  height: 6vh;
   color: white;
-  padding: 16px;
   font-size: 24px;
   gap: 20px;
   justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
 }
 
 .navbarItem {

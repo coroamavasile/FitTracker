@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  height: 94vh;
+}
+
+.leftSide {
+  width: 60%;
+  height: 100%;
+  background-image: url('../../../common//images/cover-gym.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.rightSide {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
