@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import type {PayloadAction} from '@reduxjs/toolkit';
 import {IRegisterRequestDto} from '../../common';
 import {register} from './authentication-data-access';
+import {toast} from 'react-toastify';
 
 export interface AuthenticationState {
   email: string;
@@ -33,6 +33,7 @@ export const authenticationSlice = createSlice({
       /** Fulfilled */
       .addCase(registerAction.fulfilled, (state: AuthenticationState) => {
         state.loading = false;
+        toast('Your account was successfully created!');
         // token?
       })
       /** Rejected */

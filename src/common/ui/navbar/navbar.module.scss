@@ -1,0 +1,14 @@
+.navbar {
+  display: flex;
+  background: purple;
+  height: 20px;
+  color: white;
+  padding: 16px;
+  font-size: 24px;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.navbarItem {
+  cursor: pointer;
+}
