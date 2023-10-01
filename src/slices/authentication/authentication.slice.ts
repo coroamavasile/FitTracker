@@ -5,13 +5,21 @@ import {toast} from 'react-toastify';
 
 export interface AuthenticationState {
   token: string | undefined;
-  email: string;
+  email: string | undefined;
+  name: string | undefined;
+  role: number | undefined;
+  userId: number | undefined;
+  userProfileImage: string | undefined;
   loading: boolean;
 }
 
 const initialState: AuthenticationState = {
   token: localStorage.getItem('jwt') ?? undefined,
-  email: '',
+  email: localStorage.getItem('userEmail') ?? undefined,
+  name: localStorage.getItem('userName') ?? undefined,
+  role: Number(localStorage.getItem('userRole')) ?? undefined,
+  userId: Number(localStorage.getItem('userId')) ?? undefined,
+  userProfileImage: localStorage.getItem('userProfileImage') ?? undefined,
   loading: false,
 };
 
@@ -56,6 +64,23 @@ export const authenticationSlice = createSlice({
         state.loading = false;
         state.token = action.payload.token;
         localStorage.setItem('jwt', action.payload.token);
+
+        state.email = action.payload.email;
+        localStorage.setItem('userEmail', action.payload.email);
+
+        state.userId = action.payload.id;
+        localStorage.setItem('userId', action.payload.id);
+
+        state.name = action.payload.name;
+        localStorage.setItem('userName', action.payload.name);
+
+        state.role = action.payload.role;
+        localStorage.setItem('userRole', action.payload.role);
+
+        if (action.payload.profileImage !== null) {
+          state.userProfileImage = action.payload.profileImage;
+          localStorage.setItem('userProfileImage', action.payload.profileImage);
+        }
       })
       /** Rejected */
       .addCase(registerAction.rejected, (state: AuthenticationState) => {

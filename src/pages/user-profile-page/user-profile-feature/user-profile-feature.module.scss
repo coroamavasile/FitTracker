@@ -1,0 +1,33 @@
+.container {
+  padding: 16px;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.profileImage {
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.updateBtnContainer {
+  width: 100px;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 22px;
+}
+
+.accountInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

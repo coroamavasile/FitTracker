@@ -7,6 +7,7 @@ import {AppNavbar} from './common';
 import 'react-toastify/dist/ReactToastify.css';
 import {AppPrivateRoutes} from './utils/private-routes.component';
 import {useAppSelector} from './store';
+import {UserProfilePage} from './pages/user-profile-page/user-profile.page';
 
 const App = () => {
   const {token} = useAppSelector((state) => state.authentication);
@@ -23,7 +24,7 @@ const App = () => {
 
         {/* Private Routes */}
         <Route element={<AppPrivateRoutes token={token} />}>
-          <Route path="/user-profile" element={<div>User Profile</div>} />
+          <Route path="/user-profile" element={<UserProfilePage />} />
           <Route path="/dashboard" element={<div>User Dashboard</div>} />
         </Route>
       </Routes>

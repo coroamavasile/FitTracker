@@ -1,40 +1,67 @@
 import {useNavigate} from 'react-router';
 
-import styles from './app-navbar.module.scss';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import {useAppDispatch, useAppSelector} from '../../../store';
 import {clearAuthenticationStateAction} from '../../../slices';
 
+import styles from './app-navbar.module.scss';
+
 export const AppNavbar = () => {
   const navigate = useNavigate();
-  const {token} = useAppSelector((state) => state.authentication);
+  const {token, name, userProfileImage} = useAppSelector(
+    (state) => state.authentication
+  );
   const dispatch = useAppDispatch();
 
-  const renderNavbarElement = (
-    name: string,
-    path: string,
-    publicRoute: boolean = true
-  ) => {
-    if (publicRoute)
-      return (
+  const renderNavbarElement = (name: string, path: string) => {
+    return (
+      <div
+        className={styles.navbarItem}
+        onClick={() => {
+          if (name === 'Logout') {
+            dispatch(clearAuthenticationStateAction());
+          }
+          navigate(path);
+        }}
+      >
+        {name}
+      </div>
+    );
+  };
+
+  const renderUserProfile = (name: string) => {
+    return (
+      <div className={styles.userProfileContainer}>
+        {userProfileImage ? (
+          <img
+            src={userProfileImage}
+            alt="no-photo"
+            width={30}
+            height={30}
+            className={styles.imageProfile}
+          />
+        ) : (
+          <AccountCircleIcon />
+        )}
         <div
-          className={styles.navbarItem}
           onClick={() => {
-            if (name === 'Logout') {
-              dispatch(clearAuthenticationStateAction());
-            }
-            navigate(path);
+            navigate('user-profile');
           }}
         >
           {name}
         </div>
-      );
+      </div>
+    );
   };
 
   return (
     <div className={styles.navbar}>
-      {renderNavbarElement('Login', '/login', !token)}
-      {renderNavbarElement('Register', '/register', !token)}
-      {renderNavbarElement('Logout', '/login', !!token)}
+      {!token && renderNavbarElement('Login', '/login')}
+      {!token && renderNavbarElement('Register', '/register')}
+      {token && renderNavbarElement('Dashboard', '/dashboard')}
+      {token && renderNavbarElement('Logout', '/login')}
+      {name && renderUserProfile(name)}
     </div>
   );
 };
