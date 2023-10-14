@@ -9,6 +9,5 @@ export const register = async (dto: IRegisterRequestDto) => {
 
 export const login = async (dto: ILoginRequestDto) => {
   const response = await fitTrackerApi.post('/auth', dto);
-
   return response.data;
 };

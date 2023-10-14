@@ -1,17 +1,37 @@
-import { TextField } from '@mui/material';
+import { TextField, InputLabel } from '@mui/material';
 
-export const AppTextInput = () => {
+import styles from './app-input.module.scss';
+
+interface InputInterface {
+  id: string;
+  name: string;
+  label: string;
+  value?: unknown;
+  type?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+  error?: boolean | undefined;
+  helperText?: React.ReactNode;
+}
+
+export const AppTextInput = (props: InputInterface) => {
+  const { label, id, name, value, error, helperText, onBlur, onChange, type = 'text' } = props;
+
   return (
-    <TextField
-      fullWidth
-      id="email"
-      name="email"
-      label="Email"
-      // value={formik.values.email}
-      // onChange={formik.handleChange}
-      // onBlur={formik.handleBlur}
-      // error={formik.touched.email && Boolean(formik.errors.email)}
-      // helperText={formik.touched.email && formik.errors.email}
-    />
+    <div className={styles.inputContainer}>
+      <InputLabel>{label}</InputLabel>
+      <TextField
+        className={styles.input}
+        fullWidth
+        type={type}
+        id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        error={error}
+        helperText={helperText}
+      />
+    </div>
   );
 };

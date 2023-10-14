@@ -50,11 +50,13 @@ export const authenticationSlice = createSlice({
       .addCase(loginAction.pending, (state: AuthenticationState) => {
         state.loading = true;
       })
+
       /** Fulfilled */
       .addCase(registerAction.fulfilled, (state: AuthenticationState) => {
         state.loading = false;
         toast('Your account was successfully created!');
       })
+
       .addCase(loginAction.fulfilled, (state: AuthenticationState, action) => {
         state.loading = false;
         state.token = action.payload.token;

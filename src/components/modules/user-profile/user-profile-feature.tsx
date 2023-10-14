@@ -1,57 +1,60 @@
-import { useAppSelector } from '../../../store';
-import { Button, TextField } from '@mui/material';
+import { useEffect } from 'react';
+import { AppCard } from '../..';
+import { useAppDispatch, useAppSelector } from '../../../store';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+import { AccountForm } from './components/account-form/account-form.component';
+
 import styles from './user-profile-feature.module.scss';
-import { AppCard } from '../..';
+import { getUserAction } from '../../../slices';
+import { NOT_AVAILABLE } from '../../../constants';
 
 export const UserProfileFeature = () => {
-  const { userProfileImage, email } = useAppSelector((state) => state.authentication);
+  const { userProfileImage, userId } = useAppSelector((state) => state.authentication);
+  const { currentUser } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
-  const renderUserImageProfileContainer = () => {
-    return (
+  useEffect(() => {
+    if (userId) {
+      dispatch(getUserAction(userId));
+    }
+  }, [userId]);
+
+  return (
+    <div className={styles.container}>
       <AppCard height={170}>
         <div className={styles.headerContainer}>
           <div className={styles.imageContainer}>
             {userProfileImage ? (
-              <img src={userProfileImage} alt="no-photo" width={150} height={150} className={styles.profileImage} />
+              <img
+                src={currentUser?.profileImage}
+                alt="no-photo"
+                width={100}
+                height={100}
+                className={styles.profileImage}
+              />
             ) : (
               <AccountCircleIcon />
             )}
 
             <div>
-              <p className={styles.name}>John Doe</p>
-              <p className={styles.name}>Registration Date: </p>
+              <p className={styles.name}>{currentUser?.name ?? NOT_AVAILABLE}</p>
+              <p className={styles.name}>
+                Registration Date:
+                {currentUser?.registrationDate
+                  ? new Date(currentUser.registrationDate).toLocaleDateString()
+                  : NOT_AVAILABLE}
+              </p>
             </div>
-          </div>
-
-          <div className={styles.updateBtnContainer}>
-            <Button color="primary" variant="contained" fullWidth type="submit" className={styles.updateBtn}>
-              Update
-            </Button>
           </div>
         </div>
         <hr />
         <div className={styles.accountInfoContainer}>
           <h3>Account</h3>
-          <TextField label="Name" fullWidth />
-          <TextField label="Email" value={email} disabled fullWidth />
-          <TextField label="Password" fullWidth />
-          <TextField label="Confirm Password" fullWidth />
+          {currentUser && <AccountForm user={currentUser} />}
         </div>
       </AppCard>
-    );
-  };
-
-  const renderUserInformationsContainer = () => {
-    return <div></div>;
-  };
-
-  return (
-    <div className={styles.container}>
-      {renderUserImageProfileContainer()}
-      {renderUserInformationsContainer()}
     </div>
   );
 };
