@@ -1,15 +1,13 @@
-import {AppCard} from '../../../common';
-import {useAppSelector} from '../../../store';
-import {Button, TextField} from '@mui/material';
+import { useAppSelector } from '../../../store';
+import { Button, TextField } from '@mui/material';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import styles from './user-profile-feature.module.scss';
+import { AppCard } from '../..';
 
 export const UserProfileFeature = () => {
-  const {userProfileImage, email} = useAppSelector(
-    (state) => state.authentication
-  );
+  const { userProfileImage, email } = useAppSelector((state) => state.authentication);
 
   const renderUserImageProfileContainer = () => {
     return (
@@ -17,13 +15,7 @@ export const UserProfileFeature = () => {
         <div className={styles.headerContainer}>
           <div className={styles.imageContainer}>
             {userProfileImage ? (
-              <img
-                src={userProfileImage}
-                alt="no-photo"
-                width={150}
-                height={150}
-                className={styles.profileImage}
-              />
+              <img src={userProfileImage} alt="no-photo" width={150} height={150} className={styles.profileImage} />
             ) : (
               <AccountCircleIcon />
             )}
@@ -35,13 +27,7 @@ export const UserProfileFeature = () => {
           </div>
 
           <div className={styles.updateBtnContainer}>
-            <Button
-              color="primary"
-              variant="contained"
-              fullWidth
-              type="submit"
-              className={styles.updateBtn}
-            >
+            <Button color="primary" variant="contained" fullWidth type="submit" className={styles.updateBtn}>
               Update
             </Button>
           </div>

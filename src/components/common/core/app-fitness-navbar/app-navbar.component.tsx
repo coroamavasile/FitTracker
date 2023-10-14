@@ -1,17 +1,15 @@
-import {useNavigate} from 'react-router';
+import { useNavigate } from 'react-router';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-import {useAppDispatch, useAppSelector} from '../../../store';
-import {clearAuthenticationStateAction} from '../../../slices';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import { clearAuthenticationStateAction } from '../../../../slices';
 
 import styles from './app-navbar.module.scss';
 
 export const AppNavbar = () => {
   const navigate = useNavigate();
-  const {token, name, userProfileImage} = useAppSelector(
-    (state) => state.authentication
-  );
+  const { token, name, userProfileImage } = useAppSelector((state) => state.authentication);
   const dispatch = useAppDispatch();
 
   const renderNavbarElement = (name: string, path: string) => {
@@ -34,13 +32,7 @@ export const AppNavbar = () => {
     return (
       <div className={styles.userProfileContainer}>
         {userProfileImage ? (
-          <img
-            src={userProfileImage}
-            alt="no-photo"
-            width={30}
-            height={30}
-            className={styles.imageProfile}
-          />
+          <img src={userProfileImage} alt="no-photo" width={30} height={30} className={styles.imageProfile} />
         ) : (
           <AccountCircleIcon />
         )}

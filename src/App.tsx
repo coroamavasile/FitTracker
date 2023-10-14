@@ -1,16 +1,17 @@
-import {Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/home-page/home.page';
 import LoginPage from './pages/login-page/login.page';
 import RegisterPage from './pages/register-page/register.page';
-import {ToastContainer} from 'react-toastify';
-import {AppNavbar} from './common';
+import { ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
-import {AppPrivateRoutes} from './utils/private-routes.component';
-import {useAppSelector} from './store';
-import {UserProfilePage} from './pages/user-profile-page/user-profile.page';
+import { AppPrivateRoutes } from './utils/private-routes.component';
+import { useAppSelector } from './store';
+import { UserProfilePage } from './pages/user-profile-page/user-profile.page';
+import { AppNavbar } from './components';
 
 const App = () => {
-  const {token} = useAppSelector((state) => state.authentication);
+  const { token } = useAppSelector((state) => state.authentication);
 
   return (
     <div>

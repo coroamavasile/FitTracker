@@ -1,8 +1,9 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {AUTHENTICATION_FEATURE_KEY} from '../common';
-import {authenticationReducer} from '../slices';
-import {useDispatch, useSelector} from 'react-redux';
-import type {TypedUseSelectorHook} from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+
+import { authenticationReducer } from '../slices';
+import { useDispatch, useSelector } from 'react-redux';
+import type { TypedUseSelectorHook } from 'react-redux';
+import { AUTHENTICATION_FEATURE_KEY } from '../constants';
 
 export const store = configureStore({
   reducer: {

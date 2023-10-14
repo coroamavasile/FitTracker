@@ -1,4 +1,4 @@
-import RegisterFeature from './register-feature/register-feature';
+import { RegisterFeature } from '../../components';
 
 function RegisterPage() {
   return (

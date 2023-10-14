@@ -1,5 +1,5 @@
-import {ILoginRequestDto, IRegisterRequestDto} from '../../common';
-import {fitTrackerApi} from '../../config';
+import { fitTrackerApi } from '../../config';
+import { ILoginRequestDto, IRegisterRequestDto } from '../../interfaces';
 
 export const register = async (dto: IRegisterRequestDto) => {
   const response = await fitTrackerApi.post('/users', dto);

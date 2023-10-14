@@ -1,7 +1,8 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {ILoginRequestDto, IRegisterRequestDto} from '../../common';
-import {login, register} from './authentication-data-access';
-import {toast} from 'react-toastify';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import { login, register } from './authentication-data-access';
+import { toast } from 'react-toastify';
+import { ILoginRequestDto, IRegisterRequestDto } from '../../interfaces';
 
 export interface AuthenticationState {
   token: string | undefined;
@@ -23,19 +24,13 @@ const initialState: AuthenticationState = {
   loading: false,
 };
 
-export const registerAction = createAsyncThunk(
-  'authentication/register',
-  async (dto: IRegisterRequestDto) => {
-    return register(dto);
-  }
-);
+export const registerAction = createAsyncThunk('authentication/register', async (dto: IRegisterRequestDto) => {
+  return register(dto);
+});
 
-export const loginAction = createAsyncThunk(
-  'authentication/login',
-  async (dto: ILoginRequestDto) => {
-    return login(dto);
-  }
-);
+export const loginAction = createAsyncThunk('authentication/login', async (dto: ILoginRequestDto) => {
+  return login(dto);
+});
 
 export const authenticationSlice = createSlice({
   name: 'authentication',
@@ -97,6 +92,6 @@ export const authenticationSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {clearAuthenticationStateAction} = authenticationSlice.actions;
+export const { clearAuthenticationStateAction } = authenticationSlice.actions;
 
 export const authenticationReducer = authenticationSlice.reducer;

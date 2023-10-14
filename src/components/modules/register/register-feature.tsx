@@ -1,9 +1,9 @@
-import {AppCard} from '../../../common';
-import {RegisterForm} from './components/register-form/register-form.component';
+import { AppCard } from '../../common';
+import { RegisterForm } from './components/register-form/register-form.component';
 
 import styles from './register-feature.module.scss';
 
-function RegisterFeature() {
+export const RegisterFeature = () => {
   return (
     <div className={styles.root}>
       <div className={styles.leftSide} />
@@ -14,6 +14,4 @@ function RegisterFeature() {
       </div>
     </div>
   );
-}
-
-export default RegisterFeature;
+};

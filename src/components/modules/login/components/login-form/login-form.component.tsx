@@ -1,21 +1,21 @@
-import {TextField, Button} from '@mui/material';
-import {useFormik} from 'formik';
+import { TextField, Button } from '@mui/material';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import {loginAction} from '../../../../../slices';
-import {useAppDispatch} from '../../../../../store/store';
-import {useNavigate} from 'react-router';
+import { loginAction } from '../../../../../slices';
+import { useAppDispatch } from '../../../../../store/store';
+import { useNavigate } from 'react-router';
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const formik = useFormik({
-    initialValues: {email: '', password: ''},
+    initialValues: { email: '', password: '' },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const {email, password} = values;
-      const actionResult = await dispatch(loginAction({email, password}));
+      const { email, password } = values;
+      const actionResult = await dispatch(loginAction({ email, password }));
 
       if (loginAction.fulfilled.match(actionResult)) {
         navigate('/dashboard');
@@ -25,10 +25,7 @@ export const LoginForm = () => {
 
   return (
     <div>
-      <form
-        onSubmit={formik.handleSubmit}
-        style={{display: 'flex', flexDirection: 'column', gap: '10px'}}
-      >
+      <form onSubmit={formik.handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <TextField
           fullWidth
           id="email"
@@ -61,9 +58,6 @@ export const LoginForm = () => {
 };
 
 const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email('Enter a valid email')
-    .required('Email is required'),
+  email: yup.string().email('Enter a valid email').required('Email is required'),
   password: yup.string().required('Password is required'),
 });
