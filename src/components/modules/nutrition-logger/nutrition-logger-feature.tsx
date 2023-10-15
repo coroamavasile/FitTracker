@@ -1,40 +1,33 @@
+import { useEffect, useMemo } from 'react';
 import AppTable from '../../common/core/app-table/app-table.component';
+import { useAppDispatch, useAppSelector } from '../../../store';
+import { getNutritionsAction } from '../../../slices';
 
 export const NutritionLoggerFeature = () => {
+  const dispatch = useAppDispatch();
+  const { data: nutritions } = useAppSelector((state) => state.nutritionLogger);
+
   const columns = [
     { value: 'name', name: 'Name' },
     { value: 'proteins', name: 'Proteins' },
     { value: 'fats', name: 'Fats' },
     { value: 'carbohydrates', name: 'Carbohydrates' },
+    { value: 'calories', name: 'Calories' },
+    { value: 'date', name: 'Date' },
   ];
 
-  const data = [
-    {
-      id: 1,
-      name: 'Soup',
-      proteins: 13,
-      fats: 355,
-      carbohydrates: 343,
-    },
-    {
-      id: 2,
-      name: 'Pizza',
-      carbohydrates: 999,
-      proteins: 123,
-      fats: 32,
-    },
-    {
-      id: 3,
-      name: 'Shamola',
-      proteins: 12,
-      fats: 32,
-      carbohydrates: 345,
-    },
-  ];
+  const renderedNutritions = useMemo(() => {
+    return nutritions.map((item) => ({ ...item, date: new Date(item.date).toLocaleString() }));
+  }, [nutritions]);
+
+  useEffect(() => {
+    dispatch(getNutritionsAction());
+  }, []);
 
   return (
     <div>
-      <AppTable columns={columns} data={data} />
+      <button>Add new meal</button>
+      <AppTable columns={columns} data={renderedNutritions} />
     </div>
   );
 };

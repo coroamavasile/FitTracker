@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { toast } from 'react-toastify';
-import { IUser } from '../../interfaces/user.interface';
+
 import { getUserById, updateUser } from './users-data-access';
+import { IUser } from '../../interfaces';
 
 export interface UserState {
   loading: boolean;
