@@ -38,7 +38,15 @@ export const authenticationSlice = createSlice({
   reducers: {
     clearAuthenticationStateAction: () => {
       localStorage.clear();
-      return initialState;
+      return {
+        token: undefined,
+        email: undefined,
+        name: undefined,
+        role: undefined,
+        userId: undefined,
+        userProfileImage: undefined,
+        loading: false,
+      };
     },
   },
   extraReducers: (builder) => {
