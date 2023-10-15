@@ -1,11 +1,15 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import AppTable from '../../common/core/app-table/app-table.component';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { getNutritionsAction } from '../../../slices';
+import { AppModal } from '../../common/core/app-modal/app-modal.component';
+import { NutritionLoggerForm } from './components';
 
 export const NutritionLoggerFeature = () => {
   const dispatch = useAppDispatch();
   const { data: nutritions } = useAppSelector((state) => state.nutritionLogger);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const columns = [
     { value: 'name', name: 'Name' },
@@ -25,9 +29,15 @@ export const NutritionLoggerFeature = () => {
   }, []);
 
   return (
-    <div>
-      <button>Add new meal</button>
+    <>
+      <button onClick={() => setIsModalOpen(true)}>Add new meal</button>
       <AppTable columns={columns} data={renderedNutritions} />
-    </div>
+      <AppModal
+        title="Add new meal"
+        open={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
+        children={<NutritionLoggerForm closeModal={() => setIsModalOpen(false)} />}
+      />
+    </>
   );
 };

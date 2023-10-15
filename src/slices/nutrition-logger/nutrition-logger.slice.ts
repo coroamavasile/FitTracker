@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { toast } from 'react-toastify';
 import { INutritionLogger } from '../../interfaces';
-import { getNutritions } from './nutrition-logger-data-access';
+import { createNutrition, getNutritions } from './nutrition-logger-data-access';
 
 export interface NutritionLoggerState {
   data: INutritionLogger[];
@@ -18,6 +18,13 @@ export const getNutritionsAction = createAsyncThunk('nutritionLogger/getNutritio
   return getNutritions();
 });
 
+export const createNutritionAction = createAsyncThunk(
+  'nutritionLogger/createNutritionAction',
+  async (nutrition: INutritionLogger) => {
+    return createNutrition(nutrition);
+  },
+);
+
 export const nutritionLoggerSlice = createSlice({
   name: 'nutritionLogger',
   initialState,
@@ -28,13 +35,26 @@ export const nutritionLoggerSlice = createSlice({
       .addCase(getNutritionsAction.pending, (state: NutritionLoggerState) => {
         state.loading = true;
       })
+      .addCase(createNutritionAction.pending, (state: NutritionLoggerState) => {
+        state.loading = true;
+      })
       /** Fulfilled */
       .addCase(getNutritionsAction.fulfilled, (state: NutritionLoggerState, action) => {
         state.loading = false;
         state.data = action.payload;
       })
+      .addCase(createNutritionAction.fulfilled, (state: NutritionLoggerState, action) => {
+        state.loading = false;
+        state.data = [action.payload, ...state.data];
+        toast.success('Meal was added successfully!');
+      })
       /** Rejected */
       .addCase(getNutritionsAction.rejected, (state: NutritionLoggerState) => {
+        state.loading = false;
+        /**Add message from backend */
+        toast.error('Something went wrong');
+      })
+      .addCase(createNutritionAction.rejected, (state: NutritionLoggerState) => {
         state.loading = false;
         /**Add message from backend */
         toast.error('Something went wrong');
