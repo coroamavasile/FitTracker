@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LocalDiningIcon from '@mui/icons-material/LocalDining';
 
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../../../store';
@@ -52,7 +53,7 @@ export const AppDrawer = (props: any) => {
   const routes = [
     { route: 'user-profile', name: 'User Profile', icon: <AccountBoxIcon /> },
     { route: 'dashboard', name: 'Dasboard', icon: <DashboardIcon /> },
-    { route: 'login', name: 'Logout', icon: <LogoutIcon /> },
+    { route: 'nutrition-logger', name: 'Nutrition Logger', icon: <LocalDiningIcon /> },
   ];
 
   return (
@@ -99,6 +100,34 @@ export const AppDrawer = (props: any) => {
           ))}
         </List>
         <Divider />
+        <ListItem
+          disablePadding
+          sx={{ display: 'flex', alignItems: 'flex-end', height: '100vh' }}
+          onClick={() => {
+            dispatch(clearAuthenticationStateAction());
+
+            navigate('/login');
+          }}
+        >
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, padding: '16px' }}>
         <div style={{ height: '95vh' }}>{children}</div>

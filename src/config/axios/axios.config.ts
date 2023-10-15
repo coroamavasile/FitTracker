@@ -2,8 +2,8 @@ import axios from 'axios';
 
 // Create an Axios instance with default configuration
 const fitTrackerApi = axios.create({
-  // baseURL: 'http://localhost:5000', // Replace with your API base URL
-  baseURL: 'https://fittrackr-api-87xb.onrender.com/', // Replace with your API   timeout: 10000, // Timeout for requests (in milliseconds)
+  baseURL: 'http://localhost:5000', // Replace with your API base URL
+  // baseURL: 'https://fittrackr-api-87xb.onrender.com/', // Replace with your API   timeout: 10000, // Timeout for requests (in milliseconds)
   headers: {
     'Content-Type': 'application/json',
   },
