@@ -22,7 +22,7 @@ export const UserProfileFeature = () => {
   }, [userId]);
 
   return (
-    <div className={styles.container}>
+    <div>
       <AppCard height={170}>
         <div className={styles.headerContainer}>
           <div className={styles.imageContainer}>

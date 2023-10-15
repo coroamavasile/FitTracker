@@ -19,6 +19,8 @@ export const AppNavbar = () => {
         onClick={() => {
           if (name === 'Logout') {
             dispatch(clearAuthenticationStateAction());
+            navigate('/login');
+            return;
           }
           navigate(path);
         }}
