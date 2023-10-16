@@ -5,22 +5,35 @@ import { useAppDispatch } from '../../../../../store/store';
 
 import { AppDateTimeInput, AppTextInput } from '../../../../common';
 import { AppSubmitButton } from '../../../../common/core/app-button/app-button.component';
-import { createNutritionAction } from '../../../../../slices';
+import { createNutritionAction, updateNutritionAction } from '../../../../../slices';
 import { INutritionLogger } from '../../../../../interfaces';
 
 interface NutritionLoggerFormProps {
+  formState: INutritionLogger | undefined;
   closeModal: () => void;
 }
 
 export const NutritionLoggerForm = (props: NutritionLoggerFormProps) => {
-  const { closeModal } = props;
+  const { closeModal, formState } = props;
   const dispatch = useAppDispatch();
 
   const formik = useFormik({
-    initialValues: { name: '', calories: 0, proteins: 0, carbohydrates: 0, fats: 0, date: new Date().toISOString() },
+    initialValues: formState ?? {
+      name: '',
+      calories: 0,
+      proteins: 0,
+      carbohydrates: 0,
+      fats: 0,
+      date: new Date().toISOString(),
+    },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await dispatch(createNutritionAction(values as INutritionLogger));
+      if (formState) {
+        await dispatch(updateNutritionAction(values as INutritionLogger));
+      } else {
+        await dispatch(createNutritionAction(values as INutritionLogger));
+      }
+
       closeModal();
     },
   });
@@ -89,7 +102,7 @@ export const NutritionLoggerForm = (props: NutritionLoggerFormProps) => {
           value={formik.values.date}
           onChange={formik.handleChange}
         />
-        <AppSubmitButton name="Create Meal" />
+        <AppSubmitButton name={formState ? 'Update Meal' : 'Create Meal'} />
       </form>
     </div>
   );

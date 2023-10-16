@@ -44,7 +44,13 @@ export const NutritionLoggerFeature = () => {
     <>
       <div className={styles.buttonContainer}>
         <div className={styles.button}>
-          <AppSubmitButton onClick={() => setIsModalOpen((prev) => ({ ...prev, create: true }))} name="Add new meal" />
+          <AppSubmitButton
+            onClick={() => {
+              setSelectedItem(undefined);
+              setIsModalOpen((prev) => ({ ...prev, create: true }));
+            }}
+            name="Add new meal"
+          />
         </div>
       </div>
       <AppTable
@@ -55,12 +61,16 @@ export const NutritionLoggerFeature = () => {
           setIsModalOpen((prev) => ({ ...prev, delete: true }));
           setSelectedItem(item as INutritionLogger);
         }}
+        onEditClick={(item: unknown) => {
+          setIsModalOpen((prev) => ({ ...prev, create: true }));
+          setSelectedItem(item as INutritionLogger);
+        }}
       />
       <AppModal
-        title="Add new meal"
+        title={selectedItem ? 'Update meal' : 'Add new meal'}
         open={isModalOpen.create}
         handleClose={closeModal}
-        children={<NutritionLoggerForm closeModal={closeModal} />}
+        children={<NutritionLoggerForm formState={selectedItem} closeModal={closeModal} />}
       />
       <AppConfirmationModal
         handleClose={closeModal}
@@ -69,6 +79,7 @@ export const NutritionLoggerFeature = () => {
         handleSubmit={() => {
           selectedItem && dispatch(deleteNutritionAction(selectedItem.id));
           closeModal();
+          setSelectedItem(undefined);
         }}
       />
     </>

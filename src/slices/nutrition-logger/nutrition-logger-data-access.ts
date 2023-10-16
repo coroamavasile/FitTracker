@@ -16,3 +16,8 @@ export const deleteNutrition = async (id: number) => {
   await fitTrackerApi.delete(`/nutrition-logger/${id}`);
   return id;
 };
+
+export const updateNutrition = async (nutrition: INutritionLogger) => {
+  const response = await fitTrackerApi.put(`/nutrition-logger`, nutrition);
+  return response.data;
+};

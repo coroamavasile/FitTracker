@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { toast } from 'react-toastify';
 import { INutritionLogger } from '../../interfaces';
-import { createNutrition, deleteNutrition, getNutritions } from './nutrition-logger-data-access';
+import { createNutrition, deleteNutrition, getNutritions, updateNutrition } from './nutrition-logger-data-access';
 
 export interface NutritionLoggerState {
   data: INutritionLogger[];
@@ -29,6 +29,13 @@ export const deleteNutritionAction = createAsyncThunk('nutritionLogger/deleteNut
   return deleteNutrition(id);
 });
 
+export const updateNutritionAction = createAsyncThunk(
+  'nutritionLogger/updateNutritionAction',
+  async (nutrition: INutritionLogger) => {
+    return updateNutrition(nutrition);
+  },
+);
+
 export const nutritionLoggerSlice = createSlice({
   name: 'nutritionLogger',
   initialState,
@@ -43,6 +50,9 @@ export const nutritionLoggerSlice = createSlice({
         state.loading = true;
       })
       .addCase(deleteNutritionAction.pending, (state: NutritionLoggerState) => {
+        state.loading = true;
+      })
+      .addCase(updateNutritionAction.pending, (state: NutritionLoggerState) => {
         state.loading = true;
       })
       /** Fulfilled */
@@ -61,6 +71,16 @@ export const nutritionLoggerSlice = createSlice({
         state.data = state.data.filter((item) => item.id !== deletedId);
         toast.success('Meal was deleted successfully!');
       })
+      .addCase(updateNutritionAction.fulfilled, (state: NutritionLoggerState, action) => {
+        state.loading = false;
+        state.data = state.data.map((item) => {
+          if (item.id === action.payload.id) {
+            return action.payload;
+          }
+          return item;
+        });
+        toast.success('Meal was updated successfully!');
+      })
       /** Rejected */
       .addCase(getNutritionsAction.rejected, (state: NutritionLoggerState) => {
         state.loading = false;
@@ -73,6 +93,10 @@ export const nutritionLoggerSlice = createSlice({
       .addCase(deleteNutritionAction.rejected, (state: NutritionLoggerState) => {
         state.loading = false;
         toast.error('Could not delete nutrition.');
+      })
+      .addCase(updateNutritionAction.rejected, (state: NutritionLoggerState) => {
+        state.loading = false;
+        toast.error('Could not update nutrition.');
       });
   },
 });

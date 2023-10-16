@@ -16,10 +16,11 @@ interface AppTableProps {
   columns: IColumn[];
   hasActions?: boolean;
   onDeleteClick?: (item: unknown) => void;
+  onEditClick?: (item: unknown) => void;
 }
 
 export default function AppTable(props: AppTableProps) {
-  const { columns, data, hasActions = false, onDeleteClick } = props;
+  const { columns, data, hasActions = false, onDeleteClick, onEditClick } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -41,7 +42,11 @@ export default function AppTable(props: AppTableProps) {
               {hasActions && (
                 <StyledTableCell align="right">
                   <div className={styles.buttonsContainer}>
-                    <AppEditButton />
+                    <AppEditButton
+                      onClick={() => {
+                        onEditClick && onEditClick(row);
+                      }}
+                    />
                     <AppDeleteButton
                       onClick={() => {
                         onDeleteClick && onDeleteClick(row);
