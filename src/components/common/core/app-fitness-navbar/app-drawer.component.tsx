@@ -1,29 +1,24 @@
 import * as React from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LocalDiningIcon from '@mui/icons-material/LocalDining';
+import Avatar from '@mui/material/Avatar';
 
 import { useNavigate } from 'react-router';
-import { useAppDispatch } from '../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import { clearAuthenticationStateAction } from '../../../../slices';
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
@@ -47,22 +42,53 @@ export const AppDrawer = (props: any) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const { name, userProfileImage } = useAppSelector((state) => state.authentication);
+
   const [open, setOpen] = React.useState(false);
 
   const routes = [
-    { route: 'user-profile', name: 'User Profile', icon: <AccountBoxIcon /> },
-    { route: 'dashboard', name: 'Dasboard', icon: <DashboardIcon /> },
-    { route: 'login', name: 'Logout', icon: <LogoutIcon /> },
+    { route: 'user-profile', name: 'User Profile', icon: <AccountBoxIcon htmlColor="white" /> },
+    { route: 'dashboard', name: 'Dasboard', icon: <DashboardIcon htmlColor="white" /> },
+    { route: 'nutrition-logger', name: 'Nutrition Logger', icon: <LocalDiningIcon htmlColor="white" /> },
   ];
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Drawer variant="permanent" open={open} style={{ background: 'red !important' }}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        PaperProps={{
+          sx: {
+            backgroundColor: 'purple',
+            color: 'white',
+          },
+        }}
+      >
         <DrawerHeader>
           <IconButton onClick={() => setOpen((prev) => !prev)}>
-            {open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {!open ? <ChevronRightIcon htmlColor="white" /> : <ChevronLeftIcon htmlColor="white" />}
           </IconButton>
         </DrawerHeader>
+        <ListItem disablePadding>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              <Avatar alt={name} src={userProfileImage} />
+            </ListItemIcon>
+            <ListItemText primary={name} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
         <Divider />
         <List>
           {routes.map((item, index) => (
@@ -99,6 +125,34 @@ export const AppDrawer = (props: any) => {
           ))}
         </List>
         <Divider />
+        <ListItem
+          disablePadding
+          sx={{ display: 'flex', alignItems: 'flex-end', height: '100vh' }}
+          onClick={() => {
+            dispatch(clearAuthenticationStateAction());
+
+            navigate('/login');
+          }}
+        >
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              <LogoutIcon htmlColor="white" />
+            </ListItemIcon>
+            <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, padding: '16px' }}>
         <div style={{ height: '95vh' }}>{children}</div>

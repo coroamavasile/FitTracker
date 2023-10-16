@@ -1,17 +1,15 @@
 import { useEffect } from 'react';
 import { AppCard } from '../..';
 import { useAppDispatch, useAppSelector } from '../../../store';
-
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
 import { AccountForm } from './components/account-form/account-form.component';
 
 import styles from './user-profile-feature.module.scss';
 import { getUserAction } from '../../../slices';
 import { NOT_AVAILABLE } from '../../../constants';
+import { Avatar } from '@mui/material';
 
 export const UserProfileFeature = () => {
-  const { userProfileImage, userId } = useAppSelector((state) => state.authentication);
+  const { userId } = useAppSelector((state) => state.authentication);
   const { currentUser } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
@@ -26,18 +24,7 @@ export const UserProfileFeature = () => {
       <AppCard height={170}>
         <div className={styles.headerContainer}>
           <div className={styles.imageContainer}>
-            {userProfileImage ? (
-              <img
-                src={currentUser?.profileImage}
-                alt="no-photo"
-                width={100}
-                height={100}
-                className={styles.profileImage}
-              />
-            ) : (
-              <AccountCircleIcon />
-            )}
-
+            <Avatar alt={currentUser?.name} src={currentUser?.profileImage} />
             <div>
               <p className={styles.name}>{currentUser?.name ?? NOT_AVAILABLE}</p>
               <p className={styles.name}>

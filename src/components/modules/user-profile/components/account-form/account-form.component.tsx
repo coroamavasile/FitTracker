@@ -1,11 +1,11 @@
 import * as yup from 'yup';
 
-import { IUser } from '../../../../../interfaces/user.interface';
 import { AppTextInput } from '../../../../common';
 import { AppSubmitButton } from '../../../../common/core/app-button/app-button.component';
 import { useFormik } from 'formik';
 import { useAppDispatch } from '../../../../../store';
 import { updateUserAction } from '../../../../../slices';
+import { IUser } from '../../../../../interfaces';
 
 interface AccountFormProps {
   user: IUser;

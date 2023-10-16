@@ -1,5 +1,5 @@
 import { fitTrackerApi } from '../../config';
-import { IUser } from '../../interfaces/user.interface';
+import { IUser } from '../../interfaces';
 
 export const getUserById = async (userId: number) => {
   const response = await fitTrackerApi.get(`/users/${userId}`);
