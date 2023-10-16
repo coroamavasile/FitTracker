@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
 import { AppCard } from '../..';
 import { useAppDispatch, useAppSelector } from '../../../store';
-
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
 import { AccountForm } from './components/account-form/account-form.component';
 
 import styles from './user-profile-feature.module.scss';
@@ -12,7 +9,7 @@ import { NOT_AVAILABLE } from '../../../constants';
 import { Avatar } from '@mui/material';
 
 export const UserProfileFeature = () => {
-  const { userProfileImage, userId } = useAppSelector((state) => state.authentication);
+  const { userId } = useAppSelector((state) => state.authentication);
   const { currentUser } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 

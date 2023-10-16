@@ -47,17 +47,26 @@ export const AppDrawer = (props: any) => {
   const [open, setOpen] = React.useState(false);
 
   const routes = [
-    { route: 'user-profile', name: 'User Profile', icon: <AccountBoxIcon /> },
-    { route: 'dashboard', name: 'Dasboard', icon: <DashboardIcon /> },
-    { route: 'nutrition-logger', name: 'Nutrition Logger', icon: <LocalDiningIcon /> },
+    { route: 'user-profile', name: 'User Profile', icon: <AccountBoxIcon htmlColor="white" /> },
+    { route: 'dashboard', name: 'Dasboard', icon: <DashboardIcon htmlColor="white" /> },
+    { route: 'nutrition-logger', name: 'Nutrition Logger', icon: <LocalDiningIcon htmlColor="white" /> },
   ];
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Drawer variant="permanent" open={open} style={{ background: 'red !important' }}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        PaperProps={{
+          sx: {
+            backgroundColor: 'purple',
+            color: 'white',
+          },
+        }}
+      >
         <DrawerHeader>
           <IconButton onClick={() => setOpen((prev) => !prev)}>
-            {open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {!open ? <ChevronRightIcon htmlColor="white" /> : <ChevronLeftIcon htmlColor="white" />}
           </IconButton>
         </DrawerHeader>
         <ListItem disablePadding>
@@ -139,7 +148,7 @@ export const AppDrawer = (props: any) => {
                 justifyContent: 'center',
               }}
             >
-              <LogoutIcon />
+              <LogoutIcon htmlColor="white" />
             </ListItemIcon>
             <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>

@@ -7,14 +7,19 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { IColumn } from '../../../../interfaces';
+import { AppDeleteButton, AppEditButton } from '../app-button/app-button.component';
+
+import styles from './app-table.module.scss';
 
 interface AppTableProps {
   data: any;
   columns: IColumn[];
+  hasActions?: boolean;
+  onDeleteClick?: (item: unknown) => void;
 }
 
 export default function AppTable(props: AppTableProps) {
-  const { columns, data } = props;
+  const { columns, data, hasActions = false, onDeleteClick } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -24,16 +29,27 @@ export default function AppTable(props: AppTableProps) {
             {columns.map((column: IColumn, index: number) => (
               <StyledTableCell key={index}>{column.name}</StyledTableCell>
             ))}
+            {hasActions && <StyledTableCell>Actions</StyledTableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row: any) => (
             <StyledTableRow key={row.name}>
               {columns.map((currentColumn: IColumn, index: number) => (
-                <StyledTableCell key={index} component="th" scope="row">
-                  {row[currentColumn.value]}
-                </StyledTableCell>
+                <StyledTableCell key={index}>{row[currentColumn.value]}</StyledTableCell>
               ))}
+              {hasActions && (
+                <StyledTableCell align="right">
+                  <div className={styles.buttonsContainer}>
+                    <AppEditButton />
+                    <AppDeleteButton
+                      onClick={() => {
+                        onDeleteClick && onDeleteClick(row);
+                      }}
+                    />
+                  </div>
+                </StyledTableCell>
+              )}
             </StyledTableRow>
           ))}
         </TableBody>

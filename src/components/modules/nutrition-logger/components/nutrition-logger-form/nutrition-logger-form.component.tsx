@@ -3,7 +3,7 @@ import * as yup from 'yup';
 
 import { useAppDispatch } from '../../../../../store/store';
 
-import { AppTextInput } from '../../../../common';
+import { AppDateTimeInput, AppTextInput } from '../../../../common';
 import { AppSubmitButton } from '../../../../common/core/app-button/app-button.component';
 import { createNutritionAction } from '../../../../../slices';
 import { INutritionLogger } from '../../../../../interfaces';
@@ -17,10 +17,9 @@ export const NutritionLoggerForm = (props: NutritionLoggerFormProps) => {
   const dispatch = useAppDispatch();
 
   const formik = useFormik({
-    initialValues: { name: '', calories: 0, proteins: 0, carbohydrates: 0, fats: 0 },
+    initialValues: { name: '', calories: 0, proteins: 0, carbohydrates: 0, fats: 0, date: new Date().toISOString() },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      //   const { email, name, password } = values;
       await dispatch(createNutritionAction(values as INutritionLogger));
       closeModal();
     },
@@ -82,6 +81,13 @@ export const NutritionLoggerForm = (props: NutritionLoggerFormProps) => {
           onBlur={formik.handleBlur}
           error={formik.touched.carbohydrates && Boolean(formik.errors.carbohydrates)}
           helperText={formik.touched.carbohydrates && formik.errors.carbohydrates}
+        />
+        <AppDateTimeInput
+          id="date"
+          label="Date"
+          name="date"
+          value={formik.values.date}
+          onChange={formik.handleChange}
         />
         <AppSubmitButton name="Create Meal" />
       </form>

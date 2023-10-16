@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { toast } from 'react-toastify';
 import { INutritionLogger } from '../../interfaces';
-import { createNutrition, getNutritions } from './nutrition-logger-data-access';
+import { createNutrition, deleteNutrition, getNutritions } from './nutrition-logger-data-access';
 
 export interface NutritionLoggerState {
   data: INutritionLogger[];
@@ -25,6 +25,10 @@ export const createNutritionAction = createAsyncThunk(
   },
 );
 
+export const deleteNutritionAction = createAsyncThunk('nutritionLogger/deleteNutritionAction', async (id: number) => {
+  return deleteNutrition(id);
+});
+
 export const nutritionLoggerSlice = createSlice({
   name: 'nutritionLogger',
   initialState,
@@ -38,6 +42,9 @@ export const nutritionLoggerSlice = createSlice({
       .addCase(createNutritionAction.pending, (state: NutritionLoggerState) => {
         state.loading = true;
       })
+      .addCase(deleteNutritionAction.pending, (state: NutritionLoggerState) => {
+        state.loading = true;
+      })
       /** Fulfilled */
       .addCase(getNutritionsAction.fulfilled, (state: NutritionLoggerState, action) => {
         state.loading = false;
@@ -48,16 +55,24 @@ export const nutritionLoggerSlice = createSlice({
         state.data = [action.payload, ...state.data];
         toast.success('Meal was added successfully!');
       })
+      .addCase(deleteNutritionAction.fulfilled, (state: NutritionLoggerState, action) => {
+        state.loading = false;
+        const deletedId = action.payload;
+        state.data = state.data.filter((item) => item.id !== deletedId);
+        toast.success('Meal was deleted successfully!');
+      })
       /** Rejected */
       .addCase(getNutritionsAction.rejected, (state: NutritionLoggerState) => {
         state.loading = false;
-        /**Add message from backend */
-        toast.error('Something went wrong');
+        toast.error('Could not fetch nutrition informations.');
       })
       .addCase(createNutritionAction.rejected, (state: NutritionLoggerState) => {
         state.loading = false;
-        /**Add message from backend */
-        toast.error('Something went wrong');
+        toast.error('Could not create nutrition.');
+      })
+      .addCase(deleteNutritionAction.rejected, (state: NutritionLoggerState) => {
+        state.loading = false;
+        toast.error('Could not delete nutrition.');
       });
   },
 });
