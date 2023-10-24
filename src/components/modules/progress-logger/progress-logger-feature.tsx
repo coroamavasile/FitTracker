@@ -1,44 +1,42 @@
 import { useEffect, useMemo, useState } from 'react';
-import AppTable from '../../common/core/app-table/app-table.component';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { deleteNutritionAction, getNutritionsAction } from '../../../slices';
-import { AppModal } from '../../common/core/app-modal/app-modal.component';
-import { NutritionLoggerForm } from './components';
-import { AppSubmitButton } from '../../common/core/app-button/app-button.component';
-
 import { AppConfirmationModal } from '../../common/core/app-modal/app-confirmation-modal.component';
-import { INutritionLogger } from '../../../interfaces';
-import { NOT_AVAILABLE } from '../../../constants';
+import { IProgressLogger } from '../../../interfaces';
+import { deleteProgressAction, getProgressAction } from '../../../slices';
 
-import styles from './nutrition-logger.module.scss';
+import styles from './progress-logger-feature.module.scss';
+import { AppSubmitButton } from '../../common/core/app-button/app-button.component';
+import AppTable from '../../common/core/app-table/app-table.component';
+import { AppModal } from '../../common/core/app-modal/app-modal.component';
+import { ProgressLoggerForm } from './components';
 
-export const NutritionLoggerFeature = () => {
+export const ProgressLoggerFeature = () => {
   const dispatch = useAppDispatch();
-  const { data: nutritions } = useAppSelector((state) => state.nutritionLogger);
+  const { data: progress } = useAppSelector((state) => state.progressLogger);
 
   const [isModalOpen, setIsModalOpen] = useState<{ create: boolean; delete: boolean }>({
     create: false,
     delete: false,
   });
-  const [selectedItem, setSelectedItem] = useState<INutritionLogger | undefined>(undefined);
+  const [selectedItem, setSelectedItem] = useState<IProgressLogger | undefined>(undefined);
 
   const columns = [
-    { value: 'name', name: 'Name' },
-    { value: 'proteins', name: 'Proteins' },
-    { value: 'fats', name: 'Fats' },
-    { value: 'carbohydrates', name: 'Carbohydrates' },
-    { value: 'calories', name: 'Calories' },
     { value: 'date', name: 'Date' },
+    { value: 'weight', name: 'Weight' },
+    { value: 'chestMeasurement', name: 'Chest' },
+    { value: 'bicepsMeasurement', name: 'Biceps' },
+    { value: 'waistMeasurement', name: 'Waist' },
+    { value: 'hipsMeasurement', name: 'Hips' },
   ];
 
-  const renderedNutritions = useMemo(() => {
-    return nutritions.map((item) => ({ ...item, date: new Date(item.date).toLocaleString() }));
-  }, [nutritions]);
+  const renderProgress = useMemo(() => {
+    return progress.map((item) => ({ ...item, date: new Date(item.date).toLocaleString() }));
+  }, [progress]);
 
   const closeModal = () => setIsModalOpen({ create: false, delete: false });
 
   useEffect(() => {
-    dispatch(getNutritionsAction());
+    dispatch(getProgressAction());
   }, []);
 
   return (
@@ -56,29 +54,29 @@ export const NutritionLoggerFeature = () => {
       </div>
       <AppTable
         columns={columns}
-        data={renderedNutritions}
+        data={renderProgress}
         hasActions
         onDeleteClick={(item: unknown) => {
           setIsModalOpen((prev) => ({ ...prev, delete: true }));
-          setSelectedItem(item as INutritionLogger);
+          setSelectedItem(item as IProgressLogger);
         }}
         onEditClick={(item: unknown) => {
           setIsModalOpen((prev) => ({ ...prev, create: true }));
-          setSelectedItem(item as INutritionLogger);
+          setSelectedItem(item as IProgressLogger);
         }}
       />
       <AppModal
         title={selectedItem ? 'Update meal' : 'Add new meal'}
         open={isModalOpen.create}
         handleClose={closeModal}
-        children={<NutritionLoggerForm formState={selectedItem} closeModal={closeModal} />}
+        children={<ProgressLoggerForm formState={selectedItem} closeModal={closeModal} />}
       />
       <AppConfirmationModal
         handleClose={closeModal}
-        itemName={selectedItem?.name ?? NOT_AVAILABLE}
+        itemName="this item"
         open={isModalOpen.delete}
         handleSubmit={() => {
-          selectedItem && dispatch(deleteNutritionAction(selectedItem.id));
+          selectedItem && dispatch(deleteProgressAction(selectedItem.id));
           closeModal();
           setSelectedItem(undefined);
         }}

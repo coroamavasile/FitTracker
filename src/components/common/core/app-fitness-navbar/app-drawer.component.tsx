@@ -16,6 +16,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LocalDiningIcon from '@mui/icons-material/LocalDining';
 import Avatar from '@mui/material/Avatar';
+import CachedIcon from '@mui/icons-material/Cached';
 
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../../../store';
@@ -50,6 +51,7 @@ export const AppDrawer = (props: any) => {
     { route: 'user-profile', name: 'User Profile', icon: <AccountBoxIcon htmlColor="white" /> },
     { route: 'dashboard', name: 'Dasboard', icon: <DashboardIcon htmlColor="white" /> },
     { route: 'nutrition-logger', name: 'Nutrition Logger', icon: <LocalDiningIcon htmlColor="white" /> },
+    { route: 'progress-logger', name: 'Progress Logger', icon: <CachedIcon htmlColor="white" /> },
   ];
 
   return (
