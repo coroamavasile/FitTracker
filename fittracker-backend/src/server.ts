@@ -6,6 +6,7 @@ import nutritionLoggerRouter from './routes/nutrition-logger-routes';
 import { errorHandler } from './middlewares';
 import cors from 'cors';
 import progressLoggerRouter from './routes/progress-logger-routes';
+require('dotenv').config();
 
 const app = express();
 
