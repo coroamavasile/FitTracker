@@ -1,7 +1,7 @@
 import type { Knex } from 'knex';
 require('dotenv').config();
 // Update with your config settings.
-console.log();
+
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'mssql',
