@@ -18,7 +18,7 @@ const config: { [key: string]: Knex.Config } = {
   },
 };
 
-// const config: { [key: string]: Knex.Config } = {
+// const config : { [key: string]: Knex.Config } = {
 //   development: {
 //     client: 'pg',
 //     connection: {
