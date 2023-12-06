@@ -156,7 +156,7 @@ export const AppDrawer = (props: any) => {
           </ListItemButton>
         </ListItem>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, padding: '16px' }}>
+      <Box component="main" sx={{ flexGrow: 1, padding: '16px', background: 'rgba(245, 243, 243, 0.933)' }}>
         <div style={{ height: '95vh' }}>{children}</div>
       </Box>
     </Box>

@@ -3,3 +3,4 @@ export * from './register/register-feature';
 export * from './user-profile/user-profile-feature';
 export * from './nutrition-logger/nutrition-logger-feature';
 export * from './progress-logger/progress-logger-feature';
+export * from './dashboard/dashboard-feature';

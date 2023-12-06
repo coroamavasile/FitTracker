@@ -11,6 +11,7 @@ import { AppDrawer } from './components/common/core/app-fitness-navbar/app-drawe
 import './styles.scss';
 import NutritionLoggerPage from './pages/nutrition-logger-page/nutrition-logger.page';
 import ProgressLoggerPage from './pages/progress-logger-page/progress-logger.page';
+import DashboardPage from './pages/dashboard-page/dashboard.page';
 
 const App = () => {
   const { token } = useAppSelector((state) => state.authentication);
@@ -33,7 +34,7 @@ const App = () => {
           }
         >
           <Route path="/user-profile" element={<UserProfilePage />} />
-          <Route path="/dashboard" element={<div>User Dashboard</div>} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/nutrition-logger" element={<NutritionLoggerPage />} />
           <Route path="/progress-logger" element={<ProgressLoggerPage />} />
         </Route>
