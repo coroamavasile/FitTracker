@@ -1,0 +1,29 @@
+.dashboardItemContainer {
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.933);
+  height: 10vh;
+  min-width: 10vw;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.value {
+  color: #2b3674;
+  font-family: DM Sans;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.title {
+  color: #a3aed0;
+  font-family: DM Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.28px;
+}
