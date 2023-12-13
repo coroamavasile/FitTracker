@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { Pedometer } from 'expo-sensors';
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DashboardScreen = (props) => {
   const { navigate } = useNavigation();
@@ -10,6 +11,7 @@ const DashboardScreen = (props) => {
   const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
   const [pastStepCount, setPastStepCount] = useState(0);
   const [currentStepCount, setCurrentStepCount] = useState(0);
+  const [currentUser, setCurrentUser] = useState(undefined);
 
   const logoutHandler = () => {
     navigate('LoginScreen');
@@ -36,13 +38,22 @@ const DashboardScreen = (props) => {
   };
 
   useEffect(() => {
+    const getUserData = async () => {
+      const userDataString = await AsyncStorage.getItem('userData');
+      setCurrentUser(JSON.parse(userDataString));
+    };
+
+    getUserData();
+  });
+
+  useEffect(() => {
     const subscription = subscribe();
     return () => subscription.remove && subscription.remove();
   }, []);
 
   return (
     <View style={{ marginTop: 100, marginLeft: 50 }}>
-      <Text>Hello, Vasi!</Text>
+      <Text>Hello, {currentUser?.name ?? 'N/A'}</Text>
       <Text>Steps taken in the last 24 hours: {pastStepCount}</Text>
       <Text>Your training lasted 1h and 30 minutes</Text>
       <Text>Walk! And watch this go up: {currentStepCount}</Text>

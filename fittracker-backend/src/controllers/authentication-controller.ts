@@ -1,12 +1,8 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import authenticationService from '../services/authentication-service';
 
-const authenticate = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const {email, password} = req.body;
+const authenticate = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
 
   try {
     const result = await authenticationService.authenticate(email, password);
@@ -16,4 +12,4 @@ const authenticate = async (
   }
 };
 
-export {authenticate};
+export { authenticate };
