@@ -11,10 +11,7 @@ const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Function to handle the login button press
   const handleLogin = async () => {
-    // Implement your login logic here
-
     try {
       const response = await login(email, password);
       console.log(response);
@@ -33,19 +30,14 @@ const LoginScreen = (props) => {
         { cancelable: false },
       );
     }
-
-    // navigation.navigate('DashboardScreen');
-    // You can add your authentication logic here (e.g., API call, validation, etc.)
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login into FitTracker</Text>
 
-      {/* Username input field */}
       <TextInput style={styles.input} placeholder="Username" value={email} onChangeText={(text) => setEmail(text)} />
 
-      {/* Password input field */}
       <TextInput
         style={styles.input}
         placeholder="Password"
